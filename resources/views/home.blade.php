@@ -5,7 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header d-flex justify-content-between">
+                    <h3>Product List</h3>
+                    <span>
+                        <a href="{{route('index.create')}}" class="btn btn-success">Create Product</a>
+                    </span>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
