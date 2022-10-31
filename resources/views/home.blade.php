@@ -13,14 +13,28 @@
                     </div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+                        <form action="{{route('filter')}}" method="GET">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="title" placeholder="search here ..." name="search">
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="category" class="form-control" name="filterby">
+                                        <option selected disabled>Choose Your Filter ...</option>
+                                        <option value="title">Title</option>
+                                        <option value="category">Category</option>
+                                        <option value="subcategory">Subcategory</option>
+                                        <option value="price">Price Range</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </div>
                             </div>
-                        @endif
-
+                        </form>
                         @if (count($products) > 0)
-                            <table class="table table-striped table-bordered mt-5">
+                            <table class="table table-striped table-bordered mt-3">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -34,11 +48,17 @@
                                 <tbody>
                                     @foreach ($products as $key => $product)
                                         <tr>
-                                            <th scope="row">{{$key + $products->firstItem()}}</th>
-                                            <td>{{$product->title}}</td>
-                                            <td>{{Str::limit($product->description, 50)}}</td>
-                                            <td>{{$product->price}}</td>
-                                            <td><img src="{{$product->thumbnail}}" alt="" width="50"></td>
+                                            <th scope="row">
+                                                @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                                {{ $key + $products->firstItem() }}
+                                                @else
+                                                {{ $key + 1 }}
+                                                @endif
+                                            </th>
+                                            <td>{{ $product->title }}</td>
+                                            <td>{{ Str::limit($product->description, 50) }}</td>
+                                            <td>{{ $product->price }}</td>
+                                            <td><img src="{{ $product->thumbnail }}" alt="" width="50"></td>
                                             <td>
                                                 <a href="" class="btn btn-danger">Delete</a>
                                             </td>
@@ -49,7 +69,9 @@
                         @else
                             <h2>No Products Available!!</h2>
                         @endif
-                        {{ $products->links() }}
+                        @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                            {{ $products->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
