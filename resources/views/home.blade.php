@@ -17,10 +17,20 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="title" placeholder="search here ..." name="search">
+                                    <div id="searchbox">
+                                        <input type="text" class="form-control" id="title" placeholder="search here ..." name="search">
+                                    </div>
+                                    <div class="row" id="pricebox" style="display: none">
+                                        <div class="col-6">
+                                            <input type="number" name="min" min="0" class="form-control" placeholder="minimum price">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" name="max" min="0" class="form-control" placeholder="maximum price">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <select id="category" class="form-control" name="filterby">
+                                    <select id="filterbox" class="form-control" name="filterby">
                                         <option selected disabled>Choose Your Filter ...</option>
                                         <option value="title">Title</option>
                                         <option value="category">Category</option>
@@ -77,4 +87,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const filterbox = document.getElementById('filterbox');
+        filterbox.addEventListener('change', changeDisplay);
+        function changeDisplay() {
+            $searchbox = document.getElementById('searchbox');
+            $pricebox = document.getElementById('pricebox');
+            if(filterbox.value == 'price')
+            {
+                $pricebox.style.display = 'block';
+                $searchbox.style.display = 'none';
+                // console.log('asche');
+            }
+            else
+            {
+                $pricebox.style.display = 'none';
+                $searchbox.style.display = 'block';
+            }
+        }
+    </script>
 @endsection

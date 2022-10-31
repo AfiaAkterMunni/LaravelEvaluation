@@ -40,6 +40,15 @@ class ProductController extends Controller
                 $products = $products->merge($subcategory->products);
             }
         }
+        else if($request->filterby == 'price')
+        {
+            $products = new Collection();
+            if(isset($request->min) && isset($request->max) && ((int)$request->min < (int)$request->max) )
+            {
+                $products = Product::whereBetween('price', [(int)$request->min, (int)$request->max])->get();
+            }
+            // dd($request);
+        }
         return view('home', ['products' => $products]);
     }
 }
