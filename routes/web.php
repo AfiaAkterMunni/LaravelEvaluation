@@ -21,8 +21,9 @@ Route::get('/filter', [ProductController::class, 'filter'])->name('filter');
 
 Route::middleware(['auth'])->group(function(){
 
-    Route::get('/create', [ProductController::class, 'create'])->name('index.create');
-    Route::post('/store', [ProductController::class, 'store'])->name('index.store');
+    Route::get('/create', [ProductController::class, 'create'])->name('create');
+    Route::post('/store', [ProductController::class, 'store'])->name('store');
+    Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
 
 });
 

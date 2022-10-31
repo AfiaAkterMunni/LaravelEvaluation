@@ -8,7 +8,7 @@
                     <div class="card-header d-flex justify-content-between">
                         <h3>Product List</h3>
                         <span>
-                            <a href="{{ route('index.create') }}" class="btn btn-success">Create Product</a>
+                            <a href="{{ route('create') }}" class="btn btn-success">Create Product</a>
                         </span>
                     </div>
 
@@ -16,6 +16,14 @@
                         <form action="{{route('filter')}}" method="GET">
                             @csrf
                             <div class="row">
+                                @if (session('productDelete'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+                                {{ session('productDelete') }}
+                            </div>
+                            <div class="alert-box--success" id="successBox">
+                            </div>
+                        @endif
                                 <div class="col-md-6">
                                     <div id="searchbox">
                                         <input type="text" class="form-control" id="title" placeholder="search here ..." name="search">
@@ -70,7 +78,7 @@
                                             <td>{{ $product->price }}</td>
                                             <td><img src="{{ asset('uploads/'.$product->thumbnail) }}" alt="" width="50"></td>
                                             <td>
-                                                <a href="" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('delete', ['id' => $product->id])}}" class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach

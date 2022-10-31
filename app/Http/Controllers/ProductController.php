@@ -62,7 +62,6 @@ class ProductController extends Controller
         $destinationPath = public_path('/uploads');
         $thumbnail->move($destinationPath, $newThumbnailName);
 
-
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -73,5 +72,13 @@ class ProductController extends Controller
 
         Product::create($data);
         return redirect(url('/create'))->with('createProduct', 'Product Created Successfully!!!');
+    }
+
+    public function delete($id)
+    {
+        $product = Product::find($id);
+        unlink(public_path('/uploads/'.$product->thumbnail));
+        $product->delete();
+        return redirect(url()->previous())->with('productDelete', 'Product Deleted successfully!');
     }
 }
