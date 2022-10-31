@@ -13,27 +13,30 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{route('filter')}}" method="GET">
+                        <form action="{{ route('filter') }}" method="GET">
                             @csrf
                             <div class="row">
                                 @if (session('productDelete'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
-                                {{ session('productDelete') }}
-                            </div>
-                            <div class="alert-box--success" id="successBox">
-                            </div>
-                        @endif
+                                    <div class="alert alert-success alert-dismissible fade show">
+                                        <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+                                        {{ session('productDelete') }}
+                                    </div>
+                                    <div class="alert-box--success" id="successBox">
+                                    </div>
+                                @endif
                                 <div class="col-md-6">
                                     <div id="searchbox">
-                                        <input type="text" class="form-control" id="title" placeholder="search here ..." name="search">
+                                        <input type="text" class="form-control" id="title"
+                                            placeholder="search here ..." name="search">
                                     </div>
                                     <div class="row" id="pricebox" style="display: none">
                                         <div class="col-6">
-                                            <input type="number" name="min" min="0" class="form-control" placeholder="minimum price">
+                                            <input type="number" name="min" min="0" class="form-control"
+                                                placeholder="minimum price">
                                         </div>
                                         <div class="col-6">
-                                            <input type="number" name="max" min="0" class="form-control" placeholder="maximum price">
+                                            <input type="number" name="max" min="0" class="form-control"
+                                                placeholder="maximum price">
                                         </div>
                                     </div>
                                 </div>
@@ -68,17 +71,19 @@
                                         <tr>
                                             <th scope="row">
                                                 @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                                {{ $key + $products->firstItem() }}
+                                                    {{ $key + $products->firstItem() }}
                                                 @else
-                                                {{ $key + 1 }}
+                                                    {{ $key + 1 }}
                                                 @endif
                                             </th>
                                             <td>{{ $product->title }}</td>
                                             <td>{!! Str::limit($product->description, 50) !!}</td>
                                             <td>{{ $product->price }}</td>
-                                            <td><img src="{{ asset('uploads/'.$product->thumbnail) }}" alt="" width="50"></td>
+                                            <td><img src="{{ asset('uploads/' . $product->thumbnail) }}" alt=""
+                                                    width="50"></td>
                                             <td>
-                                                <a href="{{route('delete', ['id' => $product->id])}}" class="btn btn-danger">Delete</a>
+                                                <a href="{{ route('delete', ['id' => $product->id]) }}"
+                                                    class="btn btn-danger">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -99,17 +104,15 @@
     <script>
         const filterbox = document.getElementById('filterbox');
         filterbox.addEventListener('change', changeDisplay);
+
         function changeDisplay() {
             $searchbox = document.getElementById('searchbox');
             $pricebox = document.getElementById('pricebox');
-            if(filterbox.value == 'price')
-            {
+            if (filterbox.value == 'price') {
                 $pricebox.style.display = 'block';
                 $searchbox.style.display = 'none';
                 // console.log('asche');
-            }
-            else
-            {
+            } else {
                 $pricebox.style.display = 'none';
                 $searchbox.style.display = 'block';
             }

@@ -21,8 +21,7 @@
                             <div class="alert-box--success" id="successBox">
                             </div>
                         @endif
-                        <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data"
-                            id="createForm">
+                        <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data" id="createForm">
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="title">Title</label>
