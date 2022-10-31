@@ -68,7 +68,7 @@
                                             <td>{{ $product->title }}</td>
                                             <td>{{ Str::limit($product->description, 50) }}</td>
                                             <td>{{ $product->price }}</td>
-                                            <td><img src="{{ $product->thumbnail }}" alt="" width="50"></td>
+                                            <td><img src="{{ asset('uploads/'.$product->thumbnail) }}" alt="" width="50"></td>
                                             <td>
                                                 <a href="" class="btn btn-danger">Delete</a>
                                             </td>

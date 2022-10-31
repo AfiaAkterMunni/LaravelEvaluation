@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
@@ -10,9 +11,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function create()
     {
-        return view('create');
+        $subcategories = Subcategory::get();
+        // dd($subcategories);
+        return view('create', ['subcategories'=> $subcategories]);
     }
     public function filter(Request $request)
     {
@@ -50,5 +53,25 @@ class ProductController extends Controller
             // dd($request);
         }
         return view('home', ['products' => $products]);
+    }
+
+    public function store(StoreProductRequest $request)
+    {
+        $thumbnail = $request->file('thumbnail');
+        $newThumbnailName = rand().'.'.$thumbnail->getClientOriginalExtension();
+        $destinationPath = public_path('/uploads');
+        $thumbnail->move($destinationPath, $newThumbnailName);
+
+
+        $data = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'subcategory_id' => $request->input('subcategory'),
+            'price' => $request->input('price'),
+            'thumbnail' => $newThumbnailName
+        ];
+
+        Product::create($data);
+        return redirect(url('/create'))->with('createProduct', 'Product Created Successfully!!!');
     }
 }

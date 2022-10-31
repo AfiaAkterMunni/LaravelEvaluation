@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = ['title', 'description', 'subcategory_id', 'price', 'thumbnail'];
 
     /**
      * Get the subcategory that owns the category.
